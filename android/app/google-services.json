@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "372399835540",
+    "project_id": "delivery-84b83",
+    "storage_bucket": "delivery-84b83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372399835540:android:9ac948f29a14b68f976781",
+        "android_client_info": {
+          "package_name": "net.theboringdev.delivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372399835540-0rg5ik6ik4c7got27803i2kfhfba6u9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxTRXQ21OI4jVFssZtD0JnNgJMtE8QPd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372399835540-0rg5ik6ik4c7got27803i2kfhfba6u9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
