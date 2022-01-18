@@ -28,11 +28,15 @@ class _MyHomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _bloc.add(MainPosLoadingEvent());
+    _bloc.add(MainPosLoadingEvent(false));
 
     // TODO: implement initState
     super.initState();
   }
+
+  bool locat = false;
+  Color inactive = Colors.black.withAlpha(50);
+  Color active = Colors.lightGreen;
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +44,53 @@ class _MyHomePageState extends State<HomePage> {
       bloc: _bloc,
       listener: (context, state) {
         if (state.state == States.posLoaded) {
-          print("${state.pos}");
           setState(() {
             pos = LatLng(double.parse(state.pos?["lat"].toString() ?? "33"),
                 double.parse(state.pos?["long"].toString() ?? "-7.3"));
           });
-          Timer(Duration(seconds: 5), () {
-            _bloc.add(MainPosLoadingEvent());
+          Timer(const Duration(seconds: 5), () {
+            _bloc.add(MainPosLoadingEvent(locat));
           });
         }
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.red,
-            title: Text(widget.title),
+            backgroundColor: Colors.amber,
+            title: Text(
+              widget.title,
+              style: TextStyle(color: Colors.black.withAlpha(150)),
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.location_pin,
+                      color: locat == true ? active : inactive,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        locat = !locat;
+                      });
+                    },
+                  ),
+                  Switch(
+                    value: locat,
+                    activeColor: active,
+                    inactiveThumbColor: inactive,
+                    inactiveTrackColor: inactive,
+                    onChanged: (a) {
+                      setState(() {
+                        locat = !locat;
+                      });
+                    },
+                  ),
+                ],
+              )
+            ],
           ),
           body: GoogleMap(
             markers: {

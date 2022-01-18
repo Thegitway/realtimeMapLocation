@@ -1,5 +1,6 @@
 abstract class MainEvent {}
 
 class MainPosLoadingEvent extends MainEvent {
-  MainPosLoadingEvent();
+  bool sendPos;
+  MainPosLoadingEvent(this.sendPos);
 }
