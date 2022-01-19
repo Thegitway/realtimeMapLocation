@@ -1,4 +1,5 @@
 import 'package:delivery/pages/home_page.dart';
+import 'package:delivery/pages/sign_in_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const HomePage(title: 'Delivery PFA'),
+      home: const SigninPage(),
     );
   }
 }

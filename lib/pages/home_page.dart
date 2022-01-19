@@ -3,13 +3,18 @@ import 'dart:async';
 import 'package:delivery/blocs/main_bloc.dart';
 import 'package:delivery/blocs/main_event.dart';
 import 'package:delivery/blocs/main_state.dart';
+import 'package:badges/badges.dart';
 
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  final User? user;
+
+  const HomePage({Key? key, required this.title, required this.user})
+      : super(key: key);
   final String title;
 
   @override
@@ -28,7 +33,7 @@ class _MyHomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _bloc.add(MainPosLoadingEvent(false));
+    _bloc.add(MainPosLoadingEvent(false, widget.user));
 
     // TODO: implement initState
     super.initState();
@@ -49,13 +54,18 @@ class _MyHomePageState extends State<HomePage> {
                 double.parse(state.pos?["long"].toString() ?? "-7.3"));
           });
           Timer(const Duration(seconds: 5), () {
-            _bloc.add(MainPosLoadingEvent(locat));
+            _bloc.add(MainPosLoadingEvent(locat, widget.user));
           });
         }
       },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: Image.network(
+              widget.user?.photoURL ??
+                  "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+              fit: BoxFit.cover,
+            ),
             backgroundColor: Colors.amber,
             title: Text(
               widget.title,
@@ -63,9 +73,14 @@ class _MyHomePageState extends State<HomePage> {
             ),
             actions: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
                 children: [
+                  Badge(
+                    badgeContent: Text('3'),
+                    child: Icon(
+                      Icons.delivery_dining_rounded,
+                      color: Colors.black.withAlpha(150),
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(
                       Icons.location_pin,

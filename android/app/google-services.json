@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "372399835540",
+    "firebase_url": "https://delivery-84b83-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "delivery-84b83",
     "storage_bucket": "delivery-84b83.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "372399835540-aab6ar4saf7dnbl5um7l034ibb1agbqj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.theboringdev.delivery",
+            "certificate_hash": "2fbb06f57a3752044bfc5c188c15bac65e1da65d"
+          }
+        },
         {
           "client_id": "372399835540-0rg5ik6ik4c7got27803i2kfhfba6u9i.apps.googleusercontent.com",
           "client_type": 3

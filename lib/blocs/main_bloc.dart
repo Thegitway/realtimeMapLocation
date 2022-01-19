@@ -18,7 +18,7 @@ class MainBloc<T> extends Bloc<MainEvent, MainState> {
       FirebaseDatabase database = FirebaseDatabase.instance;
       database.databaseURL =
           'https://delivery-84b83-default-rtdb.europe-west1.firebasedatabase.app';
-      DatabaseReference pos = database.ref("users/pos");
+      DatabaseReference pos = database.ref("users/${event.user?.uid}");
 
       //send pos
       if (event.sendPos == true) {
