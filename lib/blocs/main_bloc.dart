@@ -18,22 +18,22 @@ class MainBloc<T> extends Bloc<MainEvent, MainState> {
       FirebaseDatabase database = FirebaseDatabase.instance;
       database.databaseURL =
           'https://delivery-84b83-default-rtdb.europe-west1.firebasedatabase.app';
-      DatabaseReference pos = database.ref("users/${event.user?.uid}");
-
+      DatabaseReference posAdd = database.ref("users/${event.user?.uid}");
+      DatabaseReference posGet = database.ref("users");
       //send pos
       if (event.sendPos == true) {
-        Location location = new Location();
+        Location location = Location();
         LocationData _locationData;
 
         _locationData = await location.getLocation();
-        await pos.set(
-            {"lat": _locationData.latitude, "long": _locationData.longitude});
+        await posAdd.set({
+          "lat": _locationData.latitude,
+          "long": _locationData.longitude,
+        });
       }
 
       //GetPos
-
-      var ev = await pos.once();
-
+      var ev = await posGet.once();
       yield MainState.posLoaded(jsonDecode(jsonEncode(ev.snapshot.value)));
     }
   }

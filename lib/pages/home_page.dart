@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<HomePage> {
   final Completer<GoogleMapController> _controller = Completer();
-  LatLng pos = LatLng(33.5732507291, -7.64164329480);
+  List<LatLng> pos = [];
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(33.57325072915211, -7.641643294803729),
     zoom: 14.4746,
@@ -49,13 +49,17 @@ class _MyHomePageState extends State<HomePage> {
       bloc: _bloc,
       listener: (context, state) {
         if (state.state == States.posLoaded) {
-          setState(() {
-            pos = LatLng(double.parse(state.pos?["lat"].toString() ?? "33"),
-                double.parse(state.pos?["long"].toString() ?? "-7.3"));
-          });
           Timer(const Duration(seconds: 5), () {
             _bloc.add(MainPosLoadingEvent(locat, widget.user));
           });
+          print("OMAR ${pos}");
+          pos = [];
+          state.pos!.entries.forEach((element) {
+            pos.add(LatLng(double.parse(element.value["lat"].toString()),
+                double.parse(element.value["long"].toString())));
+          });
+
+          setState(() {});
         }
       },
       builder: (context, state) {
@@ -75,7 +79,7 @@ class _MyHomePageState extends State<HomePage> {
               Row(
                 children: [
                   Badge(
-                    badgeContent: Text('3'),
+                    badgeContent: Text('${pos.length}'),
                     child: Icon(
                       Icons.delivery_dining_rounded,
                       color: Colors.black.withAlpha(150),
@@ -109,15 +113,16 @@ class _MyHomePageState extends State<HomePage> {
           ),
           body: GoogleMap(
             markers: {
-              Marker(
-                icon: BitmapDescriptor.defaultMarker,
-                markerId: MarkerId('place_name'),
-                position: pos,
-                infoWindow: InfoWindow(
-                  title: 'title',
-                  snippet: 'address',
-                ),
-              )
+              for (int i = 0; i < pos.length; i++)
+                Marker(
+                  icon: BitmapDescriptor.defaultMarker,
+                  markerId: MarkerId('${pos[i]}'),
+                  position: pos[i],
+                  infoWindow: InfoWindow(
+                    title: 'title',
+                    snippet: 'address',
+                  ),
+                )
             },
             mapType: MapType.normal,
             initialCameraPosition: _kGooglePlex,
